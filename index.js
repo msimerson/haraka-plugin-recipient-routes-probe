@@ -112,7 +112,7 @@ exports.parse_mx = function (entry) {
         };
     }
 
-    // Not able to parse target MX
+    // unable to parse target MX
     return false;
 };
 
@@ -122,9 +122,8 @@ exports.check_domains_list = async function (domain) {
 };
 
 exports.redis_available = async function () {
-    const plugin = this;
-    // Check if we can use redis
-    return plugin.cfg.cache.enabled && plugin.db && (await plugin.redis_ping());
+    // verify we can use redis
+    return this.cfg.cache.enabled && this.db && (await this.redis_ping());
 };
 
 exports.check_redis_cache = async function (address) {
@@ -148,16 +147,17 @@ exports.check_redis_cache = async function (address) {
 };
 
 exports.add_redis_cache_entry = async function (address, result, ttl) {
-    const plugin = this;
+    if (!await plugin.redis_available()) return
+
     // Add entry to redis cache
     try {
-        return await plugin.db
+        return await this.db
             .multi()
             .hSet(`${cache_key_prefix}:${address}`, result)
             .expire(`${cache_key_prefix}:${address}`, ttl)
             .exec();
     } catch (err) {
-        plugin.logerror(`Error adding cache entry: ${err}`);
+        this.logerror(`Error adding cache entry: ${err}`);
         return false;
     }
 };
@@ -285,33 +285,26 @@ exports.rcpt = async function (next, connection, params) {
         connect_timeout: plugin.cfg.probe.timeout,
         idle_timeout: 5,
     };
+
     const smtp_result = await plugin.probe_mx_for_recipient(connection, smtp_options, address);
     if (smtp_result.code !== OK) {
         plugin.logdebug(
             `Recipient address ${address} refused by target MX ${target_mx.exchange}:${target_mx.port} ${smtp_result.code}/${smtp_result.msg}`,
             connection,
         );
-        // Add result to redis cache
-        if (await plugin.redis_available()) {
-            plugin.add_redis_cache_entry(address, smtp_result, plugin.cfg.cache.negative_ttl);
-        }
+        plugin.add_redis_cache_entry(address, smtp_result, plugin.cfg.cache.negative_ttl);
         txn.results.add(plugin, { fail: "mx.deny" });
-        return next(smtp_result.code, smtp_result.msg);
+        next(smtp_result.code, smtp_result.msg);
     } else {
         plugin.logdebug(
             `Recipient address ${address} accepted by target MX ${target_mx.exchange}:${target_mx.port} ${smtp_result.code}/${smtp_result.msg}`,
             connection,
         );
-        // Add result to redis cache
-        if (await plugin.redis_available()) {
-            plugin.add_redis_cache_entry(address, smtp_result, plugin.cfg.cache.ttl);
-        }
-        // Allow relaying
-        connection.relaying = true;
+        plugin.add_redis_cache_entry(address, smtp_result, plugin.cfg.cache.ttl);
+        connection.relaying = true;                   // Allow relaying
         txn.results.add(plugin, { pass: "mx.accept" });
-        // We want to use outbound
-        txn.notes.set("queue.wants", "outbound ");
-        return next(smtp_result.code, smtp_result.msg);
+        txn.notes.set("queue.wants", "outbound ");    // We want to use outbound
+        next(smtp_result.code, smtp_result.msg);
     }
 };
 
