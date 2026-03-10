@@ -31,5 +31,9 @@
   },
   "dependencies": {
     "haraka-plugin-redis": "^2.0.5"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
   }
 }
