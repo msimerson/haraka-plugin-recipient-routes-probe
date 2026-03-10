@@ -1,6 +1,5 @@
 [![CI Test Status][ci-img]][ci-url]
 [![Code Climate][clim-img]][clim-url]
-[![NPM][npm-img]][npm-url]
 
 # haraka-plugin-recipient-routes-probe
 
@@ -107,5 +106,3 @@ Written by Sébastien Riccio. Most of the code is outrageously inspired by Matt 
 [ci-url]: https://github.com/sriccio/haraka-plugin-recipient-routes-probe/actions/workflows/ci.yml
 [clim-img]: https://codeclimate.com/github/sriccio/haraka-plugin-recipient-routes-probe/badges/gpa.svg
 [clim-url]: https://codeclimate.com/github/sriccio/haraka-plugin-recipient-routes-probe
-[npm-img]: https://nodei.co/npm/haraka-plugin-recipient-routes-probe.png
-[npm-url]: https://www.npmjs.com/package/haraka-plugin-recipient-routes-probe
