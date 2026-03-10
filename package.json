@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint *.js test/*.js",
-    "lintfix": "npx eslint --fix *.js test/*.js",
+    "lint:fix": "npx eslint *.js test --fix",
+    "prettier": "npx prettier . --check",
+    "prettier:fix": "npx prettier . --write --log-level=warn",
     "versions": "npx dependency-version-checker check",
     "test": "npx mocha"
   },

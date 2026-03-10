@@ -1,4 +1,3 @@
-// node.js built-in modules
 const assert = require('node:assert')
 
 // npm modules
