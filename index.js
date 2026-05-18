@@ -87,8 +87,8 @@ exports.load_domains = function () {
 
 exports.get_rcpt_address = function (rcpt) {
     // return current recipient address
-    if (!rcpt.host) return [rcpt.address().toLowerCase()]
-    return [rcpt.address().toLowerCase(), rcpt.host.toLowerCase()]
+    if (!rcpt.host) return [rcpt.address.toLowerCase()]
+    return [rcpt.address.toLowerCase(), rcpt.host.toLowerCase()]
 }
 
 exports.parse_mx = function (entry) {

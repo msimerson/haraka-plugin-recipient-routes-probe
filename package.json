@@ -9,7 +9,7 @@
     "prettier": "npx prettier . --check",
     "prettier:fix": "npx prettier . --write --log-level=warn",
     "versions": "npx dependency-version-checker check",
-    "test": "npx mocha"
+    "test": "node --test test/*.js"
   },
   "repository": {
     "type": "git",
