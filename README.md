@@ -1,10 +1,9 @@
 [![CI Test Status][ci-img]][ci-url]
 [![Code Climate][clim-img]][clim-url]
-[![NPM][npm-img]][npm-url]
 
 # haraka-plugin-recipient-routes-probe
 
-Validate incoming mails recipients against defined target MX before accepting them. 
+Validate incoming mails recipients against defined target MX before accepting them.
 
 # Recipient validation with SMTP probing
 
@@ -45,8 +44,8 @@ The plugin is configured via two configuration files:
 - The main plugin configuration file `config/recipient-routes-probe.ini`
 
 ```ini
-; Optional redis configuration for this particular plugin 
-; Defaults to global Haraka redis plugin configuration 
+; Optional redis configuration for this particular plugin
+; Defaults to global Haraka redis plugin configuration
 
 [redis]
 ;host=127.0.0.1
@@ -98,14 +97,14 @@ select 0
 127.0.0.1:6379[0]> DEL probe::badguy@nicedomain.com
 (integer) 1
 ```
+
 # Author and credits
 
-Written by Sébastien Riccio. Most of the code is outrageously inspired by Matt Simerson's [recipient-routes](https://github.com/haraka/haraka-plugin-recipient-routes) plugin though. Thanks ! 
+Written by Sébastien Riccio. Most of the code is outrageously inspired by Matt Simerson's [recipient-routes](https://github.com/haraka/haraka-plugin-recipient-routes) plugin though. Thanks !
 
 <!-- leave these buried at the bottom of the document -->
+
 [ci-img]: https://github.com/sriccio/haraka-plugin-recipient-routes-probe/actions/workflows/ci.yml/badge.svg
 [ci-url]: https://github.com/sriccio/haraka-plugin-recipient-routes-probe/actions/workflows/ci.yml
 [clim-img]: https://codeclimate.com/github/sriccio/haraka-plugin-recipient-routes-probe/badges/gpa.svg
 [clim-url]: https://codeclimate.com/github/sriccio/haraka-plugin-recipient-routes-probe
-[npm-img]: https://nodei.co/npm/haraka-plugin-recipient-routes-probe.png
-[npm-url]: https://www.npmjs.com/package/haraka-plugin-recipient-routes-probe
