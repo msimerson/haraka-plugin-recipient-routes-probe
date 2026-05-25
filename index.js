@@ -303,7 +303,7 @@ exports.rcpt = async function (next, connection, params) {
         plugin.add_redis_cache_entry(address, smtp_result, plugin.cfg.cache.ttl)
         connection.relaying = true // Allow relaying
         txn.results.add(plugin, { pass: 'mx.accept' })
-        txn.notes.set('queue.wants', 'outbound ') // We want to use outbound
+        txn.notes.set('queue.wants', 'outbound') // We want to use outbound
         next(smtp_result.code, smtp_result.msg)
     }
 }
